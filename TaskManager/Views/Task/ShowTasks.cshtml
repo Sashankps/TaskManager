@@ -1,0 +1,75 @@
+﻿@model TaskListName
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">@Model.Name</h1>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Yet to complete</th>
+                </tr>
+            </thead>
+           
+            <tbody>
+                @foreach (var task in Model.UserTasks.Where(t=>!t.IsCompleted))
+                {
+                    <tr>
+                        <td>@task.Name</td>
+                        <form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@task.Id" method="post">
+                        <td>
+                            <button type="submit" class="btn btn-success btn-sm" asp-controller="Task" asp-action="Complete" asp-route-id="@task.Id">Done</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete </button>
+                        </td>
+                        </form>
+                    </tr>
+                }
+            </tbody>
+            
+        </table>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Completed</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var task in Model.UserTasks.Where(t=> t.IsCompleted))
+                {
+                    <tr>
+                        <td>@task.Name</td>
+                        <form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@task.Id" method="post">
+                        <td>
+
+                            <button type="submit" class="btn btn-success btn-sm" asp-controller="Task" asp-action="Undo" asp-route-id="@task.Id">Undo</button>
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+                        </td>
+                        </form>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <form asp-controller="Task" asp-action="CreateNewTask" asp-route-id="@Model.Id"  method="post">
+        <input type="hidden" name="TaskListNameId" value="@Model.Id" />
+        <div class="input-group" style=" width:50%; ">
+            <input type="text" class="form-control" name="Name" placeholder="Enter Task Name" />
+            <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+    </form>
+    <form>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a asp-controller="Task" asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back</a>
+        </div>
+    </form>
+</body>
+

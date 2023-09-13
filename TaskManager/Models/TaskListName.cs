@@ -10,7 +10,16 @@ namespace TaskManager.Models
         [Required] 
         public string Name { get; set; }
 
+        public int CompletedTasks { get; set;  }
+        public int PendingTasks { get; set; }
+
         //Navigation properties 
         public ICollection<UserTask> UserTasks { get; set; }
+
+        public TaskListName()
+        {
+            // Initialize the UserTasks collection to an empty list
+            UserTasks = new List<UserTask>();
+        }
     }
 }

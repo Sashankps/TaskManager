@@ -30,8 +30,8 @@
                 @foreach (var item in Model)
                 {
                     <li class="transaction">
-                        <span class="transaction-name">@item.Name</span>
-                        <span class="transaction-amount">@item.Amount</span>
+                        <span class="transaction-name @(item.isExpense == true ? "negative-transaction" : "positive-transaction")">@item.Name</span>
+                        <span class="transaction-amount @(item.isExpense == true  ? "negative-transaction" : "positive-transaction")">@item.Amount</span>
                         <form asp-controller="Tracker" asp-action="Delete" asp-route-id="@item.Id" method="post">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>

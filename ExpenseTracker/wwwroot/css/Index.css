@@ -105,3 +105,13 @@ label {
     padding: 10px 20px;
     cursor: pointer;
 }
+
+.negative-transaction {
+    font-weight: bold;
+    color: red; /* Red for negative transactions */
+}
+
+.positive-transaction {
+    font-weight: bold;
+    color: green; /* Green for positive transactions */
+}

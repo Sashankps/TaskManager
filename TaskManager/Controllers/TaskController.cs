@@ -56,22 +56,6 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteTask(int Id)
-        {
-            var task = _db.UserTasks.SingleOrDefault(t => t.Id == Id);
-            var id = task.TaskListNameId; 
-            if (task == null)
-            {
-                return NotFound();
-            }
-
-            _db.UserTasks.Remove(task);
-            _db.SaveChanges();
-
-            return RedirectToAction("ShowTasks", new { id });
-        }
-
-        [HttpPost]
         public IActionResult Complete(int id)
         {
             var task = _db.UserTasks.SingleOrDefault(t => t.Id == id);
@@ -109,7 +93,49 @@ namespace TaskManager.Controllers
         {
             _db.TaskListNames.Add(model); 
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            TaskListName? presentList = _db.TaskListNames.SingleOrDefault(t => t.Name == model.Name);    
+            return RedirectToAction("ShowTasks", new { presentList.Id });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTask(int Id)
+        {
+            var task = _db.UserTasks.SingleOrDefault(t => t.Id == Id);
+            var id = task.TaskListNameId;
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            _db.UserTasks.Remove(task);
+            _db.SaveChanges();
+
+            return RedirectToAction("ShowTasks", new { id });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteBatch(List<int> taskIds)
+        {
+            int TaskListNameId = 0; 
+            foreach(var taskId in taskIds)
+            {
+                var task = _db.UserTasks.SingleOrDefault(t => t.Id == taskId);
+                TaskListNameId = task.TaskListNameId; 
+                _db.UserTasks.Remove(task); 
+                _db.SaveChanges();
+            }
+            return RedirectToAction("ShowTasks", new {TaskListNameId});
+        }
+
+        [HttpPost] 
+        public IActionResult DeleteList(int id)
+        {
+            var TaskListName = _db.TaskListNames.SingleOrDefault(tl => tl.Id == id);
+            if (TaskListName == null) return NotFound(); 
+
+            _db.TaskListNames.Remove(TaskListName); 
+            _db.SaveChanges();
+            return RedirectToAction("Index"); 
         }
     }
 }

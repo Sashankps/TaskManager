@@ -1,11 +1,17 @@
 ﻿@model TaskListName
 
-<form asp-controller="Task" asp-action="NewList" method="post">
-    <div class="form-group">
-        <label for="name">Task Name</label>
-        <input type="text" asp-for="Name" class="form-control" id="name" name="name" required>
+
+<body>
+    <!-- Centered form -->
+    <div class="center-form" style="max-width:400px;">
+        <form asp-controller="Task" asp-action="NewList" method="post" class="form-container">
+            <div class="form-group">
+                <label for="name">Task Name</label>
+                <input type="text" asp-for="Name" class="form-control" id="name" name="name" required>
+            </div>
+            <input type="hidden" asp-for="CompletedTasks" name="completed" value="0">
+            <input type="hidden" asp-for="PendingTasks" name="pending" value="0">
+            <button type="submit" class="btn btn-success">Create New</button>
+        </form>
     </div>
-    <input type="hidden" asp-for="CompletedTasks" name="completed" value="0">
-    <input type="hidden" asp-for="PendingTasks"  name="pending" value="0">
-    <button type="submit" class="btn btn-success">Create New</button>
-</form>
+</body>

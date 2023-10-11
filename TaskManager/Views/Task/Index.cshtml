@@ -28,8 +28,8 @@
                             {
                                 <tr>
                                     <td><a style="text-decoration: none;" asp-controller="Task" asp-action="ShowTasks" asp-route-id="@obj.Id">@obj.Name</a></td>
-                                    <td>@obj.CompletedTasks</td>
-                                    <td>@obj.PendingTasks</td>
+                                    <td class="col-3">@obj.CompletedTasks</td>
+                                    <td class="col-3">@obj.PendingTasks</td>
                                 </tr>
                             }
                         }
